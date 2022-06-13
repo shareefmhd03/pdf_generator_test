@@ -10,8 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-from pathlib import Path
 
+import environ
+from pathlib import Path
+import os
+
+env = environ.Env()
+environ.Env.read_env(env_file=".env")
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -80,11 +85,16 @@ DATABASES = {
             'NAME': 'pdf_test',
             'ENFORCE_SCHEMA': False,
             'CLIENT': {
-                'host': "mongodb+srv://shareef:nV92a6188ENQAZun@cluster0.8yqao.mongodb.net/?retryWrites=true&w=majority"
-            }  
+                'host':env('DATABASE_HOST') 
+            }
         }
 }
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
